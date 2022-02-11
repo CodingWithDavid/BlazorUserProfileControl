@@ -1,0 +1,59 @@
+﻿
+
+        <div class="top-row px-4 image_placement">
+            <div class="profile" @onclick="toggleMenu">
+				<img src="/images/workAvitor.png">                
+			</div>
+            @if (AlertCount > 0)
+            {
+                <span class="icon-button__badge">@AlertCount</span>
+            }
+            <div class="menu @toggleClass">
+				<h3>@Title<br><span>@SubTitle</span></h3>
+				<ul>
+                    @foreach(var item in UserProfileMenuItems)
+                    {
+                        <li><img src=@item.ImageLink><a href=@item.ContentLink @onclick="toggleMenu">@item.Title</a></li>
+                    }
+				</ul>
+			</div>
+        </div>
+
+@code {
+
+    [Parameter]
+    public List<UserProfileItems> UserProfileMenuItems{ get; set; }
+
+    [Parameter]
+    public int AlertCount { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string SubTitle { get; set; }
+
+    private string toggleClass = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(Title))
+        {
+            Title = "User Profile";
+        }
+        if (string.IsNullOrEmpty(SubTitle))
+        {
+            Title = "Have a good day";
+        }
+
+        await Task.CompletedTask;
+    }
+
+    private void toggleMenu()
+    {
+        if (string.IsNullOrEmpty(toggleClass))
+            toggleClass = "active";
+        else
+            toggleClass = "";
+    }
+}

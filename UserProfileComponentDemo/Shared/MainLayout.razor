@@ -1,0 +1,94 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        
+        <UserProfileMenu UserProfileMenuItems=items 
+                         AlertCount=5
+                         Title="Coding with David"
+                         SubTitle="Having Blazor Fun"/>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+
+    private string toggleClass = "";
+    private List<UserProfileItems> items = new();
+
+    private void toggleMenu()
+    {
+        if (string.IsNullOrEmpty(toggleClass))
+            toggleClass = "active";
+        else
+            toggleClass = "";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        items = PopulateItems();
+        await Task.CompletedTask;
+    }
+
+    private List<UserProfileItems> PopulateItems()
+    {
+        List<UserProfileItems> result = new List<UserProfileItems>();
+
+        UserProfileItems item = new UserProfileItems()
+        {
+            ContentLink  = "/counter",
+            ImageLink = "/images/profile.png",
+            Title = "My Profile"
+        };
+        result.Add(item);
+
+        item = new UserProfileItems()
+        {
+            ContentLink  = "#",
+            ImageLink = "/images/edit.png",
+            Title = "Edit Profile"
+        };
+        result.Add(item);
+
+        item = new UserProfileItems()
+        {
+            ContentLink  = "#",
+            ImageLink = "/images/inbox.png",
+            Title = "Alerts"
+        };
+        result.Add(item);
+
+        item = new UserProfileItems()
+        {
+            ContentLink  = "#",
+            ImageLink = "/images/Settings.png",
+            Title = "Settings"
+        };
+        result.Add(item);
+
+        item = new UserProfileItems()
+        {
+            ContentLink  = "#",
+            ImageLink = "/images/help.png",
+            Title = "Help"
+        };
+        result.Add(item);
+
+        item = new UserProfileItems()
+        {
+            ContentLink  = "#",
+            ImageLink = "/images/logout.png",
+            Title = "Logout"
+        };
+        result.Add(item);
+
+        return result;
+    }
+}
